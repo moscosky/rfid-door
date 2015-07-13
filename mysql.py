@@ -55,7 +55,7 @@ def activeornot(tagId):
 def logcheck(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("SELECT action FROM readings WHERE tagId=%s LIMIT 1",(tagId))
+    cur.execute("SELECT action FROM readings WHERE tagId=%s ORDER BY id DESC LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
     return row[0]
