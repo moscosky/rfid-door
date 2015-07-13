@@ -58,4 +58,7 @@ def logcheck(tagId):
     cur.execute("SELECT action FROM readings WHERE tagId=%s ORDER BY id DESC LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
-    return row[0]
+    if row:
+        return row[0]
+    else:
+        return "login"
