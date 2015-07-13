@@ -31,7 +31,7 @@ def insertReading(tagId):
     cur.execute("SELECT action FROM readings WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.commit()
-    if row == "logout":
+    if row[0] == "logout":
         action = "login"
     else:
         action = "logout"
@@ -47,4 +47,4 @@ def activeornot(tagId):
     cur.execute("SELECT active FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
-    return str(row)
+    return row[0]
