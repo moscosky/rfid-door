@@ -28,7 +28,7 @@ def insertReading(tagId):
     db = connect()
     cur = db.cursor()
     currentTime=strftime("%Y.%m.%d - %H:%M:%S", localtime())
-    cur.execute("SELECT action FROM readings WHERE tagId=%s LIMIT 1",(tagId))
+    cur.execute("SELECT action FROM readings WHERE tagId=%s ORDER BY id DESC LIMIT 1",(tagId))
     row = cur.fetchone()
     db.commit()
     if row:
