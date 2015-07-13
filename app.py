@@ -10,14 +10,21 @@ continue_reading = True
 
 def initGpio():
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(8, GPIO.OUT)
+    GPIO.setup(5, GPIO.OUT)
+    GPIO.setup(6, GPIO.OUT)
     GPIO.setup(13, GPIO.OUT)
 
 def ledRedOn():
-    GPIO.output(8,True)
+    GPIO.output(5,True)
 
 def ledRedOff():
-    GPIO.output(8,False)
+    GPIO.output(5,False)
+
+def ledGreenOn():
+    GPIO.output(6,True)
+
+def ledGreenOff():
+    GPIO.output(6,False)
 
 def openDoor():
     GPIO.output(13,True)
@@ -57,13 +64,19 @@ while continue_reading:
         tagId = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
         active = mysql.activeornot(tagId)
         if active = "1":
-            ledRedOn()
-            time.sleep(0.5)
-            openDoor()
-            mysql.insertReading(tagId)
-            time.sleep(3)
-            lockDoor()
-            ledRedOff()
+            logcheck = mysql.logcheck(tagId)
+            if logcheck = "logout":
+                ledGreenOn()
+                openDoor()
+                mysql.insertReading(tagId)
+                time.sleep(3)
+                lockDoor()
+                ledGreenOff()
+            else:
+                ledRedOn()
+                mysql.insertReading(tagId)
+                time.sleep(1)
+                ledRedOff()
 
 
     
