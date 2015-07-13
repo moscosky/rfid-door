@@ -16,22 +16,22 @@ def initGpio():
     GPIO.setup(13, GPIO.OUT)
 
 def ledRedOn():
-    GPIO.output(5,True)
+    GPIO.output(5,GPIO.HIGH)
 
 def ledRedOff():
-    GPIO.output(5,False)
+    GPIO.output(5,GPIO.LOW)
 
 def ledGreenOn():
-    GPIO.output(12,True)
+    GPIO.output(12,GPIO.HIGH)
 
 def ledGreenOff():
-    GPIO.output(12,False)
+    GPIO.output(12,GPIO.LOW)
 
 def openDoor():
-    GPIO.output(13,True)
+    GPIO.output(13,GPIO.HIGH)
 
 def lockDoor():
-    GPIO.output(13,False)
+    GPIO.output(13,GPIO.LOW)
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
