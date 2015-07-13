@@ -27,19 +27,21 @@ def connect():
 def insertReading(tagId):
     db = connect()
     cur = db.cursor()
-    currentTime=strftime("%Y%m%d%H%M%S", localtime())
+    currentTime=strftime("%Y.%m.%d - %H:%M:%S", localtime())
     cur.execute("SELECT action FROM readings WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.commit()
     if row:
         if row[0] == "logout":
             action = "login"
+        else:
+            action = "logout"
     else:
         action = "logout"
     cur.execute("SELECT name FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     name = cur.fetchone()
-    db.commit()
     cur.execute("""INSERT INTO readings (name, tagId, time, action) VALUES (%s, %s, %s, %s)""",(name[0],tagId,currentTime,action)) 
+    db.commit()
     db.close()
 
 def activeornot(tagId):
