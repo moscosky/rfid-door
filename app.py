@@ -63,20 +63,47 @@ while continue_reading:
         #print "Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])
         tagId = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
         active = mysql.activeornot(tagId)
-        if active = "1":
-            logcheck = mysql.logcheck(tagId)
-            if logcheck = "logout":
-                ledGreenOn()
-                openDoor()
-                mysql.insertReading(tagId)
-                time.sleep(3)
-                lockDoor()
-                ledGreenOff()
+        if active:
+            if active = "1":
+                logcheck = mysql.logcheck(tagId)
+                if logcheck = "logout":
+                    ledGreenOn()
+                    openDoor()
+                    mysql.insertReading(tagId)
+                    time.sleep(3)
+                    lockDoor()
+                    ledGreenOff()
+                else:
+                    ledRedOn()
+                    mysql.insertReading(tagId)
+                    time.sleep(1)
+                    ledRedOff()
+
             else:
                 ledRedOn()
-                mysql.insertReading(tagId)
-                time.sleep(1)
+                time.sleep(0.1)
                 ledRedOff()
+                time.sleep(0.1)
+                ledRedOn()
+                time.sleep(0.1)
+                ledRedOff()
+                time.sleep(0.1)
+                ledRedOn()
+                time.sleep(0.1)
+                ledRedOff()
+
+        else:
+            ledRedOn()
+            time.sleep(0.1)
+            ledRedOff()
+            time.sleep(0.1)
+            ledRedOn()
+            time.sleep(0.1)
+            ledRedOff()
+            time.sleep(0.1)
+            ledRedOn()
+            time.sleep(0.1)
+            ledRedOff()
 
 
     

@@ -31,14 +31,15 @@ def insertReading(tagId):
     cur.execute("SELECT action FROM readings WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.commit()
-    if row[0] == "logout":
-        action = "login"
+    if row:
+        if row[0] == "logout":
+            action = "login"
     else:
         action = "logout"
     cur.execute("SELECT name FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     name = cur.fetchone()
     db.commit()
-    cur.execute("""INSERT INTO readings (name, tagId, time, action) VALUES (%s, %s, %s, %s)""",(name,tagId,currentTime,action)) 
+    cur.execute("""INSERT INTO readings (name, tagId, time, action) VALUES (%s, %s, %s, %s)""",(name[0],tagId,currentTime,action)) 
     db.close()
 
 def activeornot(tagId):
