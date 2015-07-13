@@ -11,27 +11,27 @@ continue_reading = True
 
 def initGpio():
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(5, GPIO.OUT)
-    GPIO.setup(12, GPIO.OUT)
-    GPIO.setup(13, GPIO.OUT)
+    GPIO.setup(29, GPIO.OUT)
+    GPIO.setup(31, GPIO.OUT)
+    GPIO.setup(33, GPIO.OUT)
 
 def ledRedOn():
-    GPIO.output(5,GPIO.HIGH)
+    GPIO.output(29,GPIO.HIGH)
 
 def ledRedOff():
-    GPIO.output(5,GPIO.LOW)
+    GPIO.output(29,GPIO.LOW)
 
 def ledGreenOn():
-    GPIO.output(12,GPIO.HIGH)
+    GPIO.output(31,GPIO.HIGH)
 
 def ledGreenOff():
-    GPIO.output(12,GPIO.LOW)
+    GPIO.output(31,GPIO.LOW)
 
 def openDoor():
-    GPIO.output(13,GPIO.HIGH)
+    GPIO.output(33,GPIO.HIGH)
 
 def lockDoor():
-    GPIO.output(13,GPIO.LOW)
+    GPIO.output(33,GPIO.LOW)
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
