@@ -101,7 +101,7 @@ while continue_reading:
                 ledRedOff()
 
         else:
-            insertCard(tagId)
+            mysql.insertCard(tagId)
             ledRedOn()
             time.sleep(0.1)
             ledRedOff()
