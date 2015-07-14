@@ -44,6 +44,13 @@ def insertReading(tagId):
     db.commit()
     db.close()
 
+def insertCard(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("""INSERT INTO cards (name, tagId, active) VALUES ('new', %s, 0)""",(tagId)
+    db.commit()
+    db.close()
+
 def activeornot(tagId):
     db = connect()
     cur = db.cursor()
