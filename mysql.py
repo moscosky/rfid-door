@@ -50,7 +50,8 @@ def activeornot(tagId):
     cur.execute("SELECT active FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
-    return row[0]
+    if row:
+        return row[0]
 
 def logcheck(tagId):
     db = connect()
