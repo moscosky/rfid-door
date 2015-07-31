@@ -47,7 +47,7 @@ def insertReading(tagId):
 def insertCard(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("""INSERT INTO cards (name, tagId, active, onlyweekend) VALUES ('new', %s, '0', '0')""",(tagId))
+    cur.execute("""INSERT INTO cards (name, tagId, active, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('new', %s, '0', '0', '0', '0', '0', '0', '0', '0')""",(tagId))
     db.commit()
     db.close()
 
