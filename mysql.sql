@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `cards` (
   `friday` enum('0','1') COLLATE utf8_czech_ci NOT NULL,
   `saturday` enum('0','1') COLLATE utf8_czech_ci NOT NULL,
   `sunday` enum('0','1') COLLATE utf8_czech_ci NOT NULL,
-  `from` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `till` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `time_from` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `time_till` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

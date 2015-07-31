@@ -1,19 +1,3 @@
-#-------------------------------------------------------------------------------
-# Name:        MySQL reader/writer
-# Purpose:
-#
-# Author:      Jakub 'Yim' Dvorak
-#
-# Created:     26.10.2013
-# Copyright:   (c) Jakub Dvorak 2013
-# Licence:
-#   ----------------------------------------------------------------------------
-#   "THE BEER-WARE LICENSE" (Revision 42):
-#   Jakub Dvorak wrote this file. As long as you retain this notice you
-#   can do whatever you want with this stuff. If we meet some day, and you think
-#   this stuff is worth it, you can buy me a beer in return.
-#   ----------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 import MySQLdb
 
 from time import strftime,localtime
@@ -47,7 +31,7 @@ def insertReading(tagId):
 def insertCard(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("""INSERT INTO cards (name, tagId, active, monday, tuesday, wednesday, thursday, friday, saturday, sunday, from, till) VALUES ('new', %s, '0', '0', '0', '0', '0', '0', '0', '0', '09:00', '17:00')""",(tagId))
+    cur.execute("""INSERT INTO cards (name, tagId, active, monday, tuesday, wednesday, thursday, friday, saturday, sunday, time_from, time_till) VALUES ('new', %s, '0', '0', '0', '0', '0', '0', '0', '0', '09:00', '17:00')""",(tagId))
     db.commit()
     db.close()
 
@@ -126,7 +110,7 @@ def sundaycheck(tagId):
 def fromcheck(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("SELECT from FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    cur.execute("SELECT time_from FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
     if row:
@@ -135,7 +119,7 @@ def fromcheck(tagId):
 def tillcheck(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("SELECT till FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    cur.execute("SELECT time_till FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
     if row:
