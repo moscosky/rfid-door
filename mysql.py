@@ -37,7 +37,7 @@ def insertReading(tagId):
         else:
             action = "logout"
     else:
-        action = "logout"
+        action = "login"
     cur.execute("SELECT name FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     name = cur.fetchone()
     cur.execute("""INSERT INTO readings (name, tagId, time, action) VALUES (%s, %s, %s, %s)""",(name[0],tagId,currentTime,action)) 
@@ -60,10 +60,64 @@ def activeornot(tagId):
     if row:
         return row[0]
 
-def onlyweekendcheck(tagId):
+def mondaycheck(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("SELECT onlyweekend FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    cur.execute("SELECT monday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def tuesdaycheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT tuesday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def wednesdaycheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT wednesday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def thursdaycheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT thursday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def fridaycheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT friday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def saturdaycheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT saturday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def sundaycheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT sunday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
     if row:
@@ -78,4 +132,4 @@ def logcheck(tagId):
     if row:
         return row[0]
     else:
-        return "login"
+        return "logout"

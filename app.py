@@ -87,9 +87,22 @@ while continue_reading:
         tagId = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
         if mysql.activeornot(tagId):
             if mysql.activeornot(tagId) == "1":
-                onlyweekend = mysql.onlyweekendcheck(tagId)
+                monday = mysql.mondaycheck(tagId)
+                tuesday = mysql.tuesdaycheck(tagId)
+                wednesday = mysql.wednesdaycheck(tagId)
+                thursday = mysql.thursdaycheck(tagId)
+                friday = mysql.fridaycheck(tagId)
+                saturday = mysql.saturdaycheck(tagId)
+                sunday = mysql.sundaycheck(tagId)
                 weekday = datetime.date.today().isoweekday()
-                if onlyweekend == "0" or weekday == 6 or weekday == 7:
+                a1 = weekday == 1 and monday == "1"
+                a2 = weekday == 2 and tuesday == "1"
+                a3 = weekday == 3 and wednesday == "1"
+                a4 = weekday == 4 and thursday == "1"
+                a5 = weekday == 5 and friday == "1"
+                a6 = weekday == 6 and saturday == "1"
+                a7 = weekday == 7 and sunday == "1"
+                if a1 or a2 or a3 or a4 or a5 or a6 or a7:
                     logcheck = mysql.logcheck(tagId)
                     if logcheck == "logout":
                         ledGreenOn()
