@@ -47,7 +47,7 @@ def insertReading(tagId):
 def insertCard(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("""INSERT INTO cards (name, tagId, active) VALUES ('new', %s, '0')""",(tagId))
+    cur.execute("""INSERT INTO cards (name, tagId, active, onlyweekend) VALUES ('new', %s, '0', '0')""",(tagId))
     db.commit()
     db.close()
 
@@ -55,6 +55,15 @@ def activeornot(tagId):
     db = connect()
     cur = db.cursor()
     cur.execute("SELECT active FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def onlyweekendcheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT onlyweekend FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
     if row:

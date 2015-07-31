@@ -6,6 +6,7 @@ import MFRC522
 import signal
 import time
 import mysql
+import datetime
 
 continue_reading = True
 
@@ -32,6 +33,19 @@ def openDoor():
 
 def lockDoor():
     GPIO.output(33,GPIO.LOW)
+
+def errorLed():
+    ledRedOn()
+    time.sleep(0.2)
+    ledRedOff()
+    time.sleep(0.2)
+    ledRedOn()
+    time.sleep(0.2)
+    ledRedOff()
+    time.sleep(0.2)
+    ledRedOn()
+    time.sleep(0.2)
+    ledRedOff()
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
@@ -73,46 +87,31 @@ while continue_reading:
         tagId = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
         if mysql.activeornot(tagId):
             if mysql.activeornot(tagId) == "1":
-                logcheck = mysql.logcheck(tagId)
-                if logcheck == "logout":
-                    ledGreenOn()
-                    openDoor()
-                    mysql.insertReading(tagId)
-                    time.sleep(3)
-                    lockDoor()
-                    ledGreenOff()
+                onlyweekend = mysql.onlyweekendcheck(tagId)
+                weekday = datetime.date.today().isoweekday()
+                if onlyweekend == "0" or weekday == 6 or weekday == 7:
+                    logcheck = mysql.logcheck(tagId)
+                    if logcheck == "logout":
+                        ledGreenOn()
+                        openDoor()
+                        mysql.insertReading(tagId)
+                        time.sleep(3)
+                        lockDoor()
+                        ledGreenOff()
+                    else:
+                        ledRedOn()
+                        mysql.insertReading(tagId)
+                        time.sleep(1)
+                        ledRedOff()
                 else:
-                    ledRedOn()
-                    mysql.insertReading(tagId)
-                    time.sleep(1)
-                    ledRedOff()
+                    errorLed()
 
             else:
-                ledRedOn()
-                time.sleep(0.1)
-                ledRedOff()
-                time.sleep(0.1)
-                ledRedOn()
-                time.sleep(0.1)
-                ledRedOff()
-                time.sleep(0.1)
-                ledRedOn()
-                time.sleep(0.1)
-                ledRedOff()
+                errorLed()
 
         else:
             mysql.insertCard(tagId)
-            ledRedOn()
-            time.sleep(0.1)
-            ledRedOff()
-            time.sleep(0.1)
-            ledRedOn()
-            time.sleep(0.1)
-            ledRedOff()
-            time.sleep(0.1)
-            ledRedOn()
-            time.sleep(0.1)
-            ledRedOff()
+            errorLed()
 
 
     
