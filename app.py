@@ -95,6 +95,11 @@ while continue_reading:
                 saturday = mysql.saturdaycheck(tagId)
                 sunday = mysql.sundaycheck(tagId)
                 weekday = datetime.date.today().isoweekday()
+                time = datetime.datetime.now().time()
+                from_string = mysql.fromcheck(tagId)
+                till_string = mysql.tillcheck(tagId)
+                fromtime = datetime.datetime.strptime(from_string, "%H:%M").time()
+                tilltime = datetime.datetime.strptime(till_string, "%H:%M").time()
                 a1 = weekday == 1 and monday == "1"
                 a2 = weekday == 2 and tuesday == "1"
                 a3 = weekday == 3 and wednesday == "1"
@@ -102,7 +107,9 @@ while continue_reading:
                 a5 = weekday == 5 and friday == "1"
                 a6 = weekday == 6 and saturday == "1"
                 a7 = weekday == 7 and sunday == "1"
-                if a1 or a2 or a3 or a4 or a5 or a6 or a7:
+                weekday_state = a1 or a2 or a3 or a4 or a5 or a6 or a7
+                time_state = fromtime < time < tilltime
+                if weekday_state and time_state:
                     logcheck = mysql.logcheck(tagId)
                     if logcheck == "logout":
                         ledGreenOn()

@@ -47,7 +47,7 @@ def insertReading(tagId):
 def insertCard(tagId):
     db = connect()
     cur = db.cursor()
-    cur.execute("""INSERT INTO cards (name, tagId, active, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('new', %s, '0', '0', '0', '0', '0', '0', '0', '0')""",(tagId))
+    cur.execute("""INSERT INTO cards (name, tagId, active, monday, tuesday, wednesday, thursday, friday, saturday, sunday, from, till) VALUES ('new', %s, '0', '0', '0', '0', '0', '0', '0', '0', '09:00', '17:00')""",(tagId))
     db.commit()
     db.close()
 
@@ -118,6 +118,24 @@ def sundaycheck(tagId):
     db = connect()
     cur = db.cursor()
     cur.execute("SELECT sunday FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def fromcheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT from FROM cards WHERE tagId=%s LIMIT 1",(tagId))
+    row = cur.fetchone()
+    db.close()
+    if row:
+        return row[0]
+
+def tillcheck(tagId):
+    db = connect()
+    cur = db.cursor()
+    cur.execute("SELECT till FROM cards WHERE tagId=%s LIMIT 1",(tagId))
     row = cur.fetchone()
     db.close()
     if row:
