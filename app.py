@@ -127,12 +127,41 @@ while continue_reading:
                         ledRedOff()
                 else:
                     errorLed()
+                    
+            else:
+                errorLed()
+
+        elif mysql.event_activeornot(tagId):
+            if mysql.event_activeornot(tagId) == "1":
+                time = datetime.datetime.now()
+                from_string = mysql.event_fromcheck(tagId)
+                till_string = mysql.event_tillcheck(tagId)
+                fromtime = datetime.datetime.strptime(from_string, "%Y.%m.%d - %H:%M:%S")
+                tilltime = datetime.datetime.strptime(till_string, "%Y.%m.%d - %H:%M:%S")
+                time_state = fromtime < time < tilltime
+                if time_state:
+                    logcheck = mysql.event_logcheck(tagId)
+                    if logcheck == "logout":
+                        ledGreenOn()
+                        openDoor()
+                        mysql.event_insertReading(tagId)
+                        wait.wait(timeout=3)
+                        lockDoor()
+                        ledGreenOff()
+                    else:
+                        ledRedOn()
+                        mysql.event_insertReading(tagId)
+                        wait.wait(timeout=1)
+                        ledRedOff()
+                else:
+                    errorLed()
 
             else:
                 errorLed()
 
         else:
             mysql.insertCard(tagId)
+            mysql.event_insertCard(tagId)
             errorLed()
 
 

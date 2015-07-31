@@ -23,3 +23,22 @@ CREATE TABLE IF NOT EXISTS `readings` (
   `action` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `event_cards` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `tagId` bigint(18) unsigned NOT NULL,
+  `active` enum('0','1') COLLATE utf8_czech_ci NOT NULL,
+  `time_from` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `time_till` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `event_readings` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `tagId` bigint(18) unsigned NOT NULL,
+  `time` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `action` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
