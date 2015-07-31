@@ -7,6 +7,7 @@ import signal
 import time
 import mysql
 import datetime
+import threading
 
 continue_reading = True
 
@@ -36,15 +37,15 @@ def lockDoor():
 
 def errorLed():
     ledRedOn()
-    time.sleep(0.2)
+    wait.wait(timeout=0.2)
     ledRedOff()
-    time.sleep(0.2)
+    wait.wait(timeout=0.2)
     ledRedOn()
-    time.sleep(0.2)
+    wait.wait(timeout=0.2)
     ledRedOff()
-    time.sleep(0.2)
+    wait.wait(timeout=0.2)
     ledRedOn()
-    time.sleep(0.2)
+    wait.wait(timeout=0.2)
     ledRedOff()
 
 # Capture SIGINT for cleanup when the script is aborted
@@ -72,6 +73,7 @@ ledRedOff()
 while continue_reading:
 
     initGpio()
+    wait = threading.Event()
 
     # Scan for cards    
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
@@ -115,13 +117,13 @@ while continue_reading:
                         ledGreenOn()
                         openDoor()
                         mysql.insertReading(tagId)
-                        time.sleep(3)
+                        wait.wait(timeout=3)
                         lockDoor()
                         ledGreenOff()
                     else:
                         ledRedOn()
                         mysql.insertReading(tagId)
-                        time.sleep(1)
+                        wait.wait(timeout=1)
                         ledRedOff()
                 else:
                     errorLed()
